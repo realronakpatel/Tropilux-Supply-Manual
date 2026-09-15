@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tropilux Supply Manual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #201b15;
+    --ink-soft: #5c5646;
+    --ink-faint: #8a8370;
+    --paper: #f5f1e6;
+    --surface: #fffdf8;
+    --surface-2: #ece4cf;
+    --line: #ddd3b8;
+    --rust: #bf4e1c;
+    --rust-soft: #e6d3c2;
+    --navy: #1e3a5c;
+    --navy-soft: #d7e0e9;
+    --ok: #3f7d53;
+    --ok-soft: #d9e8dd;
+    --warn: #9c6a0c;
+    --warn-soft: #ecdfc2;
+    --danger: #a5392e;
+    --danger-soft: #ecd6d2;
+    --shadow: 0 1px 0 rgba(32,27,21,0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #efe8d9;
+      --ink-soft: #beb39a;
+      --ink-faint: #8c8168;
+      --paper: #17140f;
+      --surface: #201c15;
+      --surface-2: #2a2519;
+      --line: #3c3524;
+      --rust: #e2854e;
+      --rust-soft: #4a3222;
+      --navy: #8fb0d4;
+      --navy-soft: #24303e;
+      --ok: #7dc294;
+      --ok-soft: #24382b;
+      --warn: #dcae5a;
+      --warn-soft: #3a2f18;
+      --danger: #e28a7e;
+      --danger-soft: #3c2521;
+      --shadow: 0 1px 0 rgba(0,0,0,0.3);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #efe8d9;
+    --ink-soft: #beb39a;
+    --ink-faint: #8c8168;
+    --paper: #17140f;
+    --surface: #201c15;
+    --surface-2: #2a2519;
+    --line: #3c3524;
+    --rust: #e2854e;
+    --rust-soft: #4a3222;
+    --navy: #8fb0d4;
+    --navy-soft: #24303e;
+    --ok: #7dc294;
+    --ok-soft: #24382b;
+    --warn: #dcae5a;
+    --warn-soft: #3a2f18;
+    --danger: #e28a7e;
+    --danger-soft: #3c2521;
+    --shadow: 0 1px 0 rgba(0,0,0,0.3);
+  }
+
+  * { box-sizing: border-box; }
+  html { color-scheme: light dark; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    line-height: 1.6;
+    padding: 0 20px;
+  }
+  img { max-width: 100%; }
+  h1, h2, h3, .eyebrow, .nav-group h4, .role-chip, .step, .pill, nav a {
+    font-family: "Oswald", "Arial Narrow", sans-serif;
+  }
+  code, .mono, .data { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+
+  h2, h3 { text-wrap: balance; }
+  p { max-width: 62ch; }
+  a { color: var(--rust); }
+
+  /* ---- Masthead ---- */
+  .masthead {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding-block: 40px 28px;
+    border-bottom: 3px solid var(--ink);
+  }
+  .masthead-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .kicker {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+  .masthead h1 {
+    font-size: clamp(2rem, 5vw, 3.1rem);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    margin: 6px 0 10px;
+    line-height: 1.05;
+  }
+  .masthead .dek {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    max-width: 58ch;
+    margin: 0;
+  }
+  .masthead-meta {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    text-align: right;
+    line-height: 1.6;
+  }
+  .role-legend {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+  }
+
+  /* ---- Role chips ---- */
+  .role-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 5px 10px 4px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .role-admin   { background: var(--rust-soft);  color: var(--rust);  border-color: color-mix(in srgb, var(--rust) 35%, transparent); }
+  .role-office  { background: var(--navy-soft);  color: var(--navy);  border-color: color-mix(in srgb, var(--navy) 35%, transparent); }
+  .role-warehouse { background: var(--ok-soft);  color: var(--ok);    border-color: color-mix(in srgb, var(--ok) 35%, transparent); }
+  .role-staff   { background: var(--warn-soft);  color: var(--warn);  border-color: color-mix(in srgb, var(--warn) 35%, transparent); }
+
+  /* ---- Layout ---- */
+  .manual {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 48px;
+    padding-block: 36px 80px;
+    align-items: start;
+  }
+  nav.toc {
+    position: sticky;
+    top: 24px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+  .nav-group { margin-bottom: 22px; }
+  .nav-group h4 {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+    margin: 0 0 8px;
+  }
+  nav.toc ul { list-style: none; margin: 0; padding: 0; }
+  nav.toc a {
+    display: block;
+    padding: 5px 0 5px 12px;
+    border-left: 2px solid var(--line);
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 13.5px;
+    letter-spacing: 0.01em;
+    transition: color .15s, border-color .15s;
+  }
+  nav.toc a:hover { color: var(--ink); border-color: var(--ink-faint); }
+  nav.toc a.active { color: var(--rust); border-color: var(--rust); font-weight: 500; }
+
+  main { min-width: 0; }
+
+  .module {
+    padding-block: 34px;
+    border-bottom: 1px solid var(--line);
+    scroll-margin-top: 20px;
+  }
+  .module:first-child { padding-top: 4px; }
+  .module:last-child { border-bottom: none; }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 6px;
+  }
+  .eyebrow .num { color: var(--rust); font-weight: 600; }
+  .module h2 {
+    font-size: 1.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    margin: 0 0 12px;
+  }
+  .module .intro { color: var(--ink); margin-bottom: 16px; }
+  .module h3 {
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    margin: 26px 0 10px;
+    padding-top: 4px;
+  }
+  .module h3 .tag {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    color: var(--rust);
+    margin-right: 8px;
+  }
+
+  .who {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 18px 0;
+  }
+  .who .label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .who-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+
+  /* ---- Pipeline ---- */
+  .pipeline {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 20px 0 22px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+  }
+  .step {
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 6px 11px;
+    border-radius: 3px;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .step.go { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, transparent); background: var(--ok-soft); }
+  .arrow { color: var(--ink-faint); padding: 0 8px; font-size: 14px; }
+  .branch-row { display: flex; align-items: center; flex-wrap: wrap; gap: 0; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); width: 100%; }
+  .branch-tag { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-faint); margin-right: 10px; }
+  .step.stop { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 40%, transparent); background: var(--danger-soft); }
+  .step.wait { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent); background: var(--warn-soft); }
+
+  .module ol, .module ul { padding-left: 22px; margin: 12px 0; max-width: 66ch; }
+  .module li { margin-bottom: 9px; }
+  .module ol li::marker { font-family: "IBM Plex Mono", monospace; color: var(--rust); font-weight: 600; }
+  .module ul.tight li { margin-bottom: 6px; }
+
+  .note {
+    margin-top: 18px;
+    padding: 12px 16px;
+    background: var(--surface-2);
+    border-left: 3px solid var(--rust);
+    border-radius: 0 4px 4px 0;
+    font-size: 15.5px;
+    max-width: 62ch;
+  }
+  .note strong { color: var(--ink); }
+  .note + .note { margin-top: 12px; }
+  .note.warn { border-left-color: var(--warn); }
+
+  .fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+    margin: 14px 0 20px;
+    max-width: 66ch;
+  }
+  .field {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+  .field .k { display: block; font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 3px; }
+  .field .v { color: var(--ink); }
+
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 14px 0; }
+  .tab { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; padding: 5px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-soft); background: var(--surface); }
+
+  /* ---- Reference tables ---- */
+  .role-table, .glossary {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+    font-size: 15px;
+  }
+  .role-table th, .role-table td, .glossary th, .glossary td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .role-table th, .glossary th {
+    font-family: "Oswald", sans-serif;
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+  }
+  .glossary td:first-child {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    white-space: nowrap;
+    color: var(--ink);
+  }
+  .table-wrap { overflow-x: auto; }
+
+  footer.colophon {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 26px 0 50px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-faint);
+    font-size: 13px;
+    font-family: "IBM Plex Mono", monospace;
+  }
+
+  @media (max-width: 860px) {
+    .manual { grid-template-columns: 1fr; gap: 20px; }
+    nav.toc {
+      position: static;
+      max-height: none;
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+    nav.toc .nav-group { margin-bottom: 0; flex: 0 0 auto; }
+    nav.toc ul { display: flex; gap: 10px; }
+    nav.toc a { border-left: none; border-bottom: 2px solid var(--line); padding: 4px 2px; }
+    .masthead-meta { text-align: left; }
+  }
+</style>
+
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-top">
+    <div>
+      <p class="kicker">Internal Operations · Field Reference</p>
+      <h1>Tropilux Supply</h1>
+      <p class="dek">The system your team uses to request, stock, move, and track everything that furnishes and maintains a Tropilux property — from a warehouse pallet to a resident's move-in checklist.</p>
+    </div>
+    <div class="masthead-meta">
+      Rev. 2026.09 — Verified Edition<br>
+      15 sidebar modules<br>
+      5 roles · cross-checked vs. source
+    </div>
+  </div>
+  <div class="role-legend">
+    <span class="role-chip role-admin">Admin</span>
+    <span class="role-chip role-office">Office</span>
+    <span class="role-chip role-warehouse">Warehouse</span>
+    <span class="role-chip role-staff">Staff / Employee</span>
+  </div>
+</div>
+
+<div class="manual">
+  <nav class="toc" aria-label="Table of contents">
+    <div class="nav-group">
+      <h4>Start Here</h4>
+      <ul>
+        <li><a href="#signing-in">Signing In &amp; Navigation</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+      </ul>
+    </div>
+    <div class="nav-group">
+      <h4>Daily Operations</h4>
+      <ul>
+        <li><a href="#task-manager">Task Manager</a></li>
+        <li><a href="#timesheet">Timesheet</a></li>
+        <li><a href="#item-requests">Item Requests</a></li>
+        <li><a href="#misc-requests">Misc Requests</a></li>
+      </ul>
+    </div>
+    <div class="nav-group">
+      <h4>Inventory &amp; Stock</h4>
+      <ul>
+        <li><a href="#item-intake">Item Intake</a></li>
+        <li><a href="#inventory">Inventory</a></li>
+        <li><a href="#used-inventory">Used Inventory &amp; Returns</a></li>
+        <li><a href="#manual-entry">Manual Entry</a></li>
+        <li><a href="#orders">Orders</a></li>
+      </ul>
+    </div>
+    <div class="nav-group">
+      <h4>Warehouse Setup</h4>
+      <ul>
+        <li><a href="#shelves">Shelf Locations</a></li>
+        <li><a href="#locations">Locations</a></li>
+      </ul>
+    </div>
+    <div class="nav-group">
+      <h4>Administration</h4>
+      <ul>
+        <li><a href="#users">Users</a></li>
+        <li><a href="#reports">Reports &amp; Notifications</a></li>
+        <li><a href="#backups">Backups</a></li>
+      </ul>
+    </div>
+    <div class="nav-group">
+      <h4>Reference</h4>
+      <ul>
+        <li><a href="#roles-ref">Roles at a Glance</a></li>
+        <li><a href="#glossary">Status Glossary</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <section class="module" id="signing-in">
+      <p class="eyebrow"><span class="num">01</span> · Start Here</p>
+      <h2>Signing In &amp; Navigation</h2>
+      <p class="intro">Open the app in a browser, or install it: on an iPhone using Safari specifically (other iOS browsers can't install home-screen apps this way), a banner styled like a native install prompt — built into the app itself — offers to walk you through <strong>Share → Add to Home Screen</strong>. Dismiss it once and it won't ask again on that device. Sign in with your work email and password.</p>
+      <ol>
+        <li>Where you land on login depends on your role: <strong>Admin</strong> lands on the <strong>Dashboard</strong>; <strong>Office</strong> is routed straight into <strong>Item Requests</strong> instead; <strong>Warehouse, Staff, and Employee</strong> all land on the same page — <strong>Task Manager</strong> — since the Dashboard doesn't exist for them. (If you later click into a page your role can't open, you're bounced to that same fallback — except Office, which bounces to the Dashboard rather than back to Item Requests in that case.) A link inside a notification email can also drop you somewhere specific, like directly on the request or task it's about.</li>
+        <li>The sidebar on the left is your map of the system, in this order: Dashboard, Task Manager, Timesheet, Item Requests, Misc Requests, Item Intake, Inventory, Used Inventory, Manual Entry, Orders, Shelves, Locations, Users, Reports &amp; Notifications, Backups — this manual follows that same order. The sidebar only lists what your role can actually use; if a section here isn't in your sidebar, that's expected, not a bug.</li>
+        <li>Your name, initials, and role sit at the bottom of the sidebar, next to the sign-out button. On a phone or narrow screen, the sidebar tucks behind a hamburger menu.</li>
+      </ol>
+      <div class="note"><strong>Live updates —</strong> the app keeps an open connection to the server. When a coworker approves a request, receives a shipment, or dispenses stock, your screen updates itself in the background — no refresh button to hunt for, on almost every list screen in the app. It's resilient, too: if your connection briefly drops (laptop sleep, a flaky network), it automatically reconnects and refreshes itself rather than quietly going stale. Two screens are the exception and don't update live: the Users directory only pushes changes to Admin (Office has to refresh to see a newly-added user), and Backups' daily-runs grid never live-updates at all.</div>
+      <div class="note"><strong>Date filters, everywhere —</strong> most list screens (Item Requests, Misc Requests, Orders, Task Manager, Used Inventory, Manual Entry, Item Intake, Timesheet Reports) share the same date-range control: quick presets like Today, Yesterday, Past 7/30 Days, This/Last Week/Month/Year, plus a custom range — so you rarely need to type a date by hand.</div>
+      <div class="note"><strong>Scoped access —</strong> your account can be restricted to specific properties and inventory categories by an Admin. If a screen looks lighter than a coworker's — fewer properties in a dropdown, fewer items in the catalog — that's your account's scope working as intended. One sharp edge: a non-admin account with <em>no</em> properties assigned sees an empty property dropdown everywhere, not "everything" — only an unscoped Admin sees all properties by default. Ask an Admin if something you need is missing.</div>
+      <div class="note"><strong>Search is forgiving —</strong> item and property search ignores case, and treats curly quotes, straight quotes, and written-out measurements as the same thing — <span class="mono">72"</span>, <span class="mono">72-inch</span>, and <span class="mono">72in</span> all match each other.</div>
+      <div class="note"><strong>Photos get resized —</strong> any photo you upload — on a request, a task, an intake — is automatically compressed and resized before it's saved, so it doesn't need to match your camera's original resolution. A replaced or orphaned photo isn't deleted outright, either — it's moved to an archive rather than erased, in case it's needed again.</div>
+      <div class="note"><strong>Staying current —</strong> when a new version of the app ships, a "Reload / Later" prompt appears so you can pick up the update on your own schedule instead of being forced out of what you're doing.</div>
+      <div class="note"><strong>Locked out?</strong> There's no self-service "forgot password" — if you can't sign in, ask an Admin to reset your password or check whether your account has been deactivated.</div>
+    </section>
+
+    <section class="module" id="dashboard">
+      <p class="eyebrow"><span class="num">02</span> · Start Here</p>
+      <h2>Dashboard</h2>
+      <p class="intro">Five stat cards, each a shortcut into the filtered list behind it.</p>
+      <div class="fields">
+        <div class="field"><span class="k">Card</span><span class="v">Total Inventory Items</span></div>
+        <div class="field"><span class="k">Shows</span><span class="v">Count + month-over-month growth</span></div>
+        <div class="field"><span class="k">Card</span><span class="v">Timesheet Submissions</span></div>
+        <div class="field"><span class="k">Shows</span><span class="v">This week's count</span></div>
+        <div class="field"><span class="k">Card</span><span class="v">Pending Admin Approval</span></div>
+        <div class="field"><span class="k">Shows</span><span class="v">Requests awaiting sign-off</span></div>
+        <div class="field"><span class="k">Card</span><span class="v">Sick Days</span></div>
+        <div class="field"><span class="k">Shows</span><span class="v">This week's count</span></div>
+        <div class="field"><span class="k">Card</span><span class="v">Pending Returns</span></div>
+        <div class="field"><span class="k">Shows</span><span class="v">Open return count</span></div>
+      </div>
+      <p>Below the cards, a <strong>Low Stock Alerts</strong> list flags anything running out — click an item to jump straight into Inventory, filtered to it — and a <strong>Recent Orders</strong> list shows the latest purchasing activity with status pills, plus counts of properties, units, and outstanding orders.</p>
+      <div class="note">Scoping works differently on this page than elsewhere: the Inventory and Low Stock cards do respect your assigned categories, but the property/unit counts and the orders list do not — a location-restricted account still sees company-wide numbers there. If a variant item has more than one variant running low, Low Stock Alerts shows just the first one plus a count of how many more, rather than listing every low variant.</div>
+      <div class="who"><span class="label">Who can see this page</span><span class="role-chip role-admin">Admin</span><span class="role-chip role-office">Office</span></div>
+      <div class="note">The Dashboard is exclusive to Admin and Office — there's no scaled-down version for other roles. Warehouse, Staff, and Employee accounts don't have this page at all; going to its address redirects them straight back out to Task Manager, their shared fallback screen.</div>
+      <div class="note">Everything on it is wired to nearly twenty different live-update events, so it refreshes itself the instant something changes anywhere in the app.</div>
+    </section>
+
+    <section class="module" id="task-manager">
+      <p class="eyebrow"><span class="num">03</span> · Daily Operations</p>
+      <h2>Task Manager</h2>
+      <p class="intro">A board of six task types tied to the apartment lifecycle, each with its own color and icon: <strong>Maintenance, Move In, Move Out, Transfer, Billing, Admin.</strong> The page has two views: <strong>Task List</strong> (browse) and <strong>Assign Task</strong> (create).</p>
+
+      <h3><span class="tag">Browsing</span>Task List</h3>
+      <p>Type tabs across the top show live counts for each of the six task types. Within a type, <strong>scope tabs</strong> narrow the list to <em>All</em>, <em>Assigned to Me</em>, or <em>Assigned by Me</em> (Admin gets the full "All" view by default). <strong>Status pills</strong> filter by <em>Pending</em>, <em>Awaiting Admin</em>, or <em>Completed</em>. Further filters cover location, staff member, priority, whether it's recurring, free-text search, and a date range. Admin/Office can export the current filtered view to CSV.</p>
+
+      <h3><span class="tag">Creating</span>Assign a Task</h3>
+      <p>Pick the task type, assign one or more employees, set a deadline and a priority (<strong>Low</strong> or <strong>Urgent</strong>). Maintenance, Admin, and <strong>Billing</strong> tasks can all be made <strong>recurring</strong> — Daily, Weekly, Bi-Weekly, Monthly, Quarterly, Bi-Annually, or Annually — which automatically spawns the next occurrence as soon as one is completed.</p>
+      <div class="note">Creating and reassigning a task isn't locked to Admin/Office the way approvals are — any signed-in role can technically do both. In practice it's Admin/Office who set up property-wide tasks, but don't be surprised if a coworker in another role can too.</div>
+
+      <h3><span class="tag">Maintenance &amp; Admin</span>Simple Tasks</h3>
+      <p>A free-text description with photo uploads. Every assignee marks their part done; for <strong>Maintenance</strong>, Admin/Office still gives a final close once everyone has confirmed. <strong>Admin</strong>-type tasks close automatically the moment all assignees confirm — no separate sign-off step.</p>
+
+      <h3><span class="tag">Move In / Move Out / Transfer</span>Checklist Tasks</h3>
+      <p>These three share a 7-point checklist, each item marked Yes/No with notes: <strong>Cleaning, Utilities, Appliances, Linens &amp; Bathroom, Kitchenware, Inspection, Keys.</strong></p>
+      <ul class="tight">
+        <li><strong>Move In</strong> — date, time, and deposit details, plus the checklist.</li>
+        <li><strong>Move Out</strong> — the checklist, plus key return and a <strong>damage log</strong>: for each damaged or missing item, record the item (picked from the catalog), quantity, a damage type, a photo, and a description.</li>
+        <li><strong>Transfer</strong> — runs the whole thing twice: once for the unit being left, once for the unit being moved into. These aren't independent — the Move-Out half has to be completed before the Move-In half can be started.</li>
+      </ul>
+      <p>Move In and Move Out both lock down a few fields as required, not optional: an <strong>Actual Move-In/Move-Out Date</strong>, and a note on any checklist item marked "No." Move Out additionally requires <strong>electric and water meter readings</strong> before it can be completed. If "Keys returned" is marked No, the system automatically adds a damage-log entry for the missing key rather than making you log it by hand. All three checklist types finish the same way — a step literally labeled <strong>Verify Billing &amp; Close Task</strong>, which asks Admin to confirm the charges set up when the task was created have actually been collected before it closes.</p>
+      <div class="note"><strong>Automatic follow-through —</strong> logging damage on a Move Out or Transfer can automatically create a High-priority Item Request (to replace what's damaged) and an Urgent Maintenance task in the same step — notifying the right people without anyone having to remember to file a separate ticket. Any photo attached to a task uploads as soon as you pick it, and submission is blocked until every photo has finished (or been removed, if one failed).</div>
+
+      <h3><span class="tag">Billing</span>Billing Tasks</h3>
+      <p>Each assigned person submits a note (readings, amounts, whatever the billing cycle needs). A progress chip shows how many of the assigned staff have submitted so far. Anyone except Office can mark a Billing task complete.</p>
+
+      <div class="pipeline">
+        <span class="step">Assigned</span><span class="arrow">→</span>
+        <span class="step wait">Pending <span style="color:var(--ink-faint);font-weight:400">(every assignee confirmed)</span></span><span class="arrow">→</span>
+        <span class="step go">Completed</span>
+      </div>
+      <div class="note"><strong>Consensus model —</strong> a task only advances once <em>every</em> assigned employee has recorded their own completion. Admin alone can force-close a task outright, bypassing consensus; Admin <em>or</em> Office can confirm a single step on someone else's behalf if there's a holdup. Both kinds of override are logged, along with every ordinary status change and comment, in that task's activity log — and Admin/Office can also reopen or delete a task.</div>
+    </section>
+
+    <section class="module" id="timesheet">
+      <p class="eyebrow"><span class="num">04</span> · Daily Operations</p>
+      <h2>Timesheet</h2>
+      <p class="intro">Everyone logs their own hours, day by day.</p>
+      <div class="tabs"><span class="tab">Submit</span><span class="tab">My Entries</span><span class="tab">Reports</span></div>
+      <p>On <strong>Submit</strong>, fill in up to three shift slots for the day, each with a start/end time picker and one or more properties worked at (with notes per property):</p>
+      <div class="fields">
+        <div class="field"><span class="k">Morning</span><span class="v">~6am – 12pm</span></div>
+        <div class="field"><span class="k">Afternoon</span><span class="v">~12pm – 6pm</span></div>
+        <div class="field"><span class="k">On-Call / Overtime</span><span class="v">~6pm – 12am</span></div>
+      </div>
+      <p>Or skip shifts entirely and mark the day a <strong>Sick Day</strong> — or flag it a <strong>Public Holiday</strong>, which also hides the shift-entry fields unless you additionally check <strong>Worked on Holiday</strong>. The three shift slots are checked against each other too; overlapping times are rejected.</p>
+      <p><strong>My Entries</strong> shows your own submission history. <strong>Reports</strong> (Admin/Office only) shows everyone's hours with a bar chart by worker, CSV export, and a date range filter that follows the company's Thursday–Wednesday payroll week.</p>
+      <div class="who"><span class="label">Edit or permanently delete an entry after submission</span><span class="role-chip role-admin">Admin</span></div>
+      <div class="note">Submitting for a date that already has an entry doesn't overwrite it — it only adds whichever shift slots weren't already there; submitting nothing new gets rejected. Once a day is marked Sick, or Public Holiday without Worked on Holiday, you can't add shifts to it from Submit at all — an Admin edit is the only way to change it, and an edit can't leave a day completely empty (delete it instead).</div>
+      <div class="note">Edits to an existing entry are stamped with who made the change and when, so a correction is always distinguishable from the original submission.</div>
+    </section>
+
+    <section class="module" id="item-requests">
+      <p class="eyebrow"><span class="num">05</span> · Daily Operations</p>
+      <h2>Item Requests</h2>
+      <p class="intro">The core daily loop: someone at a property needs something, the warehouse supplies it. (Shown in some places as <span class="mono">Apartment Requests</span>.)</p>
+
+      <h3><span class="tag">Step 1</span>New Request</h3>
+      <p>Staff open a new request and work through: <strong>property → unit → rooms → items.</strong> A single request can cover multiple rooms, and each room can list multiple items.</p>
+      <ul class="tight">
+        <li>Pick each item from the catalog (searchable, with a photo) — from either the new-stock catalog or the Used Pool directly — or type a description if it isn't a catalog item.</li>
+        <li>Set a quantity per item and an overall priority — <strong>Low, Medium,</strong> or <strong>High.</strong></li>
+        <li>Give a reason per line — <strong>Damaged, Missing, Repair, New,</strong> or <strong>Other</strong> — plus a free-text note.</li>
+        <li>Attach a photo per item if it helps — a photo of the damage being replaced, for instance.</li>
+      </ul>
+      <p>The system won't let you request more of an item than currently exists in stock — if you split one item across two lines (say, some damaged and some new), the check adds those lines together rather than checking each alone — and it warns you if the same item was recently dispensed to the same unit, to catch accidental duplicate requests.</p>
+      <div class="note">The catalog picker doesn't show everyone the same detail: Admin and Warehouse see the real quantity on hand, while every other role — including Office — sees only an Available / Out of Stock badge rather than an exact count.</div>
+
+      <h3><span class="tag">Step 2</span>Review</h3>
+      <div class="who-row"><span class="role-chip role-warehouse">Warehouse</span><span class="role-chip role-office">Office</span><span class="role-chip role-admin">Admin</span><span class="label">can act here</span></div>
+      <ul class="tight">
+        <li><strong>Approve All</strong> — clears every line as requested.</li>
+        <li><strong>Partial Approve</strong> — adjust the approved quantity line by line; open to Warehouse as well as Admin/Office at this first-pass review stage.</li>
+        <li><strong>Reject</strong> — declines the request outright.</li>
+      </ul>
+      <p>If any line is flagged <em>Requires Admin Approval</em> — either because the item itself is flagged, or because the requested quantity crosses that item's approval threshold — a Warehouse approval doesn't finalize it. It routes instead to <strong>Pending Admin Approval</strong>, a second queue only Admin/Office can clear. Swapping in a substitute item at dispense time doesn't get around this: if the substitute is also flagged, the request bounces back to Pending rather than skipping the check. The Pending tab has its own toggle filter for "Requires Admin Approval" requests, plus filter chips by reason (Damaged/Missing/Repair/New/Other) with live counts.</p>
+
+      <h3><span class="tag">Step 3</span>Dispense</h3>
+      <div class="who-row"><span class="role-chip role-warehouse">Warehouse</span><span class="role-chip role-admin">Admin</span></div>
+      <ul class="tight">
+        <li><strong>Disburse All</strong> — hands out every approved line in full.</li>
+        <li><strong>Partially Disburse</strong> — hands out only some of the approved quantity. The request moves to <strong>Partial Dispensed</strong>, and a separate <strong>Disburse More Items</strong> button appears so the remaining approved quantity can be handed out later, in one or more further installments.</li>
+        <li><strong>Substitute &amp; Disburse</strong> — swap in a different catalog item (or a different pool — new vs. used) at the moment of hand-out, capturing that substitute's real price and stock impact.</li>
+      </ul>
+      <p>Stock is deducted from whichever pool the item came from — for the new-stock pool, the oldest purchased batch is used first, so what the request "cost" stays accurate even as supplier prices move.</p>
+
+      <h3><span class="tag">Step 4</span>Return (when it applies)</h3>
+      <p>Some catalog items — typically tools and equipment — are flagged <em>Requires Return of Used Item</em>. For those, the loop doesn't end at dispense:</p>
+      <ol>
+        <li>The requester (or anyone) marks the unused quantity as <strong>Return Unused Item</strong>.</li>
+        <li>Warehouse then physically checks it back in with <strong>Accept Unused Item</strong> — this is the only moment stock is actually credited back. A flagged return never inflates the count just because someone said it was coming back.</li>
+      </ol>
+      <div class="note">This return step is skipped even on a flagged item if the line's reason was <strong>New</strong> or <strong>Missing</strong> — there's no used unit to send back in those cases, so no Pending Return record is created for that line.</div>
+
+      <div class="pipeline">
+        <span class="step">Pending</span><span class="arrow">→</span>
+        <span class="step wait">Pending Admin Approval</span><span class="arrow">→</span>
+        <span class="step">Approved</span><span class="arrow">→</span>
+        <span class="step go">Dispensed</span><span class="arrow">→</span>
+        <span class="step wait">Pending Returned</span><span class="arrow">→</span>
+        <span class="step go">Returned</span>
+        <div class="branch-row">
+          <span class="branch-tag">Can end or split early</span>
+          <span class="step stop">Rejected</span><span class="arrow">·</span>
+          <span class="step">Partial Approved</span><span class="arrow">·</span>
+          <span class="step">Partial Dispensed</span>
+        </div>
+      </div>
+
+      <div class="note"><strong>Finding things —</strong> the request list can be searched by property, unit, requester, item name, SKU, shelf, notes, or a substituted item's name. Roles with financial access see a running dollar total of what's been requested versus what's actually been handed out.</div>
+      <div class="note"><strong>Exporting —</strong> a single request's PDF shows both the item's catalog photo and, separately, the photo you attached with your reason — a filtered-list PDF instead uses smaller thumbnails to keep it manageable. Either way, prices are automatically left off for roles without financial access; CSV export is also available. Reports &amp; Notifications' Daily Usage Report can roll this activity up over a custom window of up to 31 days (7 by default), and each request's number (e.g. <span class="mono">REQ-2026-168</span>) starts counting at 101 each year, not 001.</div>
+      <div class="note"><strong>Deleting —</strong> a request can be permanently deleted, not just rejected or archived — this is Admin-only and irreversible.</div>
+    </section>
+
+    <section class="module" id="misc-requests">
+      <p class="eyebrow"><span class="num">06</span> · Daily Operations</p>
+      <h2>Misc Requests</h2>
+      <p class="intro">For anything that isn't an inventory item — "the printer's out of toner," "need sign-off on this expense." Anyone submits a description, sets a priority (<strong>Low, Medium,</strong> or <strong>High</strong> — the same scale as Item Requests), and addresses it to either <strong>Admin</strong> or <strong>Warehouse</strong>, which routes it into that team's queue. Like Item Requests, each one gets a stable number, formatted <span class="mono">MISC-2026-###</span> — numbering starts at 101 each year on both, not 001. Search here only matches the requester's name and the notes field, not priority or who it's addressed to.</p>
+      <div class="tabs"><span class="tab">All</span><span class="tab">Admin Review</span><span class="tab">Warehouse Review</span><span class="tab">Completed</span></div>
+      <div class="who">
+        <span class="label">Complete Admin-addressed</span><span class="role-chip role-admin">Admin</span><span class="role-chip role-office">Office</span>
+        <span class="label" style="margin-left:14px">Complete Warehouse-addressed</span><span class="role-chip role-warehouse">Warehouse</span><span class="role-chip role-admin">Admin</span><span class="role-chip role-office">Office</span>
+      </div>
+      <div class="pipeline">
+        <span class="step">Pending</span><span class="arrow">→</span>
+        <span class="step">Admin Review / Warehouse Review</span><span class="arrow">→</span>
+        <span class="step go">Completed</span>
+      </div>
+      <div class="note">Marking one complete archives it — it isn't gone, and can still be filtered back into view. A true, permanent delete is Admin-only. Admin/Office can also edit a request after submission, filter by priority, and export the current list to CSV.</div>
+    </section>
+
+    <section class="module" id="item-intake">
+      <p class="eyebrow"><span class="num">07</span> · Inventory &amp; Stock</p>
+      <h2>Item Intake</h2>
+      <p class="intro">For things that show up without a purchase order — found items, donations, whatever gets pulled off a job site.</p>
+
+      <h3><span class="tag">Step 1</span>Submit Intake</h3>
+      <div class="who-row"><span class="role-chip role-admin">Admin</span><span class="role-chip role-office">Office</span><span class="role-chip role-warehouse">Warehouse</span></div>
+      <p>Pick an existing catalog item or type a new one, choose the destination pool (<strong>New</strong> or <strong>Used</strong>), a condition (Used–Good, Used–Fair, For Parts, or Damaged), a quantity, a shelf, and notes. A photo is required — the form won't submit without one.</p>
+
+      <h3><span class="tag">Step 2</span>Admin Review — this is where stock actually changes</h3>
+      <div class="who-row"><span class="role-chip role-admin">Admin</span></div>
+      <p>Approve with one of: <strong>Add to New Inventory, Merge into Existing Inventory, Add to Used Inventory, Merge into Existing Used Inventory</strong> (a searchable picker lets you merge into a specific variant), <strong>Send for Repair, Discard / Trash,</strong> or <strong>Give Away</strong>. For the four add/merge decisions, the Inventory or Used Inventory record updates <strong>immediately</strong> — the count is live in the catalog the moment Admin approves, before Warehouse does anything further. "Add to New/Used Inventory" isn't a one-click choice — it opens the full item form right there, so category, min stock, unit cost, approval settings, and (if applicable) variant details all get filled in as part of approving. Or mark it <strong>Needs Info</strong>, which sends a message back to whoever submitted it (they can attach a new photo when they respond); it comes back for another look. It can also be marked <strong>Unresolved</strong> or rejected outright.</p>
+      <div class="note warn"><strong>Merging can convert a simple item into a variant item —</strong> if you merge an intake in as a new variant of an item that's currently simple (one quantity, no variants) and already has stock, the system automatically converts that item to carry variants, folding its existing stock into a first variant. You'll be asked to type a name for that existing stock (up to 60 characters) so it has a label going forward — after this, the item behaves like any other variant item, including in Inventory and Item Requests.</div>
+      <div class="note">Merging into the <strong>New Inventory</strong> pool can quietly tighten that item's rules: if either side required Admin approval, the merged item keeps that requirement (it's never loosened), and if both sides had a quantity threshold, the merged item keeps the <em>stricter</em> (lower) one. Merging into the <strong>Used</strong> pool only carries the approval-required flag over the same way — the existing item's quantity threshold is left as-is either way.</div>
+
+      <h3><span class="tag">Step 3</span>Warehouse Confirm</h3>
+      <div class="who-row"><span class="role-chip role-warehouse">Warehouse</span></div>
+      <p>For decisions that need physical follow-through — sending something out for repair, discarding it, giving it away — the assigned person confirms it actually happened: <strong>Confirmed, Denied,</strong> or <strong>Unresolved,</strong> with notes. Admin/Office can also step in to deny or unresolve. For an <strong>add/merge</strong> decision, there's nothing left for this step to change in the catalog — it's a paper-trail confirmation, since the count already moved back at Review.</p>
+
+      <div class="tabs"><span class="tab">Pending Approval</span><span class="tab">Needs Info</span><span class="tab">Pending Action</span><span class="tab">Confirmed</span><span class="tab">Denied</span><span class="tab">Unresolved</span><span class="tab">Send for Repair</span></div>
+
+      <div class="pipeline">
+        <span class="step">Submitted</span><span class="arrow">→</span>
+        <span class="step wait">Needs Info <span style="color:var(--ink-faint);font-weight:400">(loops back)</span></span><span class="arrow">→</span>
+        <span class="step">Reviewed <span style="color:var(--ink-faint);font-weight:400">(stock moves here)</span></span><span class="arrow">→</span>
+        <span class="step">Pending Warehouse Action</span><span class="arrow">→</span>
+        <span class="step go">Confirmed</span>
+        <div class="branch-row">
+          <span class="branch-tag">Can also end at</span>
+          <span class="step stop">Denied</span><span class="arrow">·</span>
+          <span class="step">Unresolved</span>
+        </div>
+      </div>
+      <div class="note">CSV export and permanent delete are limited to Admin/Office.</div>
+    </section>
+
+    <section class="module" id="inventory">
+      <p class="eyebrow"><span class="num">08</span> · Inventory &amp; Stock</p>
+      <h2>Inventory</h2>
+      <p class="intro">The master catalog of everything the warehouse can hand out.</p>
+
+      <h3><span class="tag">Browsing</span>Two Views, Plus Filters</h3>
+      <p><strong>Grouped</strong> shows one card per item, expandable to reveal its variants. <strong>Expanded</strong> flattens every sellable line — every size/color combination — into its own row, which is faster when you're hunting one specific variant. Your device remembers which view you last used. Quick-filter chips sit above the list for <strong>Low Stock</strong> and <strong>Out of Stock</strong> (each its own count, not just a colored border), plus one chip per category.</p>
+
+      <h3><span class="tag">Adding / Editing</span>The Item Form</h3>
+      <div class="fields">
+        <div class="field"><span class="k">Name &amp; category</span><span class="v">Autocomplete or create new</span></div>
+        <div class="field"><span class="k">Description</span><span class="v">Free text</span></div>
+        <div class="field"><span class="k">Variants</span><span class="v">Toggle on for size/color/finish</span></div>
+        <div class="field"><span class="k">Photo</span><span class="v">Root item + per variant</span></div>
+        <div class="field"><span class="k">Quantity / min stock</span><span class="v">Steppers, drives low-stock alerts</span></div>
+        <div class="field"><span class="k">Shelf location</span><span class="v">Dropdown</span></div>
+        <div class="field"><span class="k">Unit cost</span><span class="v">Feeds FIFO costing</span></div>
+        <div class="field"><span class="k">Last restock date</span><span class="v">Reference only</span></div>
+        <div class="field"><span class="k">Requires Admin Approval</span><span class="v">Toggle + optional quantity threshold</span></div>
+        <div class="field"><span class="k">Requires Return</span><span class="v">Toggle — routes into Pending Returns</span></div>
+      </div>
+      <div class="who">
+        <span class="label">Edit photo &amp; shelf only</span><span class="role-chip role-warehouse">Warehouse</span>
+        <span class="label" style="margin-left:14px">Full edit / create / delete</span><span class="role-chip role-admin">Admin</span>
+        <span class="label" style="margin-left:14px">View only</span><span class="role-chip role-office">Office</span>
+      </div>
+      <p>When a Warehouse user opens an existing item, every field except photo and shelf is locked, with a banner explaining why — this keeps costs, thresholds, and approval flags in Admin's hands.</p>
+
+      <h3><span class="tag">Bulk Add</span>Two Ways In</h3>
+      <p>The Bulk Add modal has two tabs: a manual multi-row entry grid for typing in several new items by hand, or a CSV/XLSX upload using a two-sheet template (Simple Items and Variant Items).</p>
+
+      <div class="note"><strong>Staying on top of stock —</strong> every quantity change — dispense, receipt, disposition, manual entry — is written to that item's history, viewable per item or per variant, grouped by day and showing who made each change. A single-field edit gets its own specific headline (e.g. "Shelf location updated") rather than a generic one, and most rows link straight through to the record that caused the change — the request, order, intake, or manual entry behind it.</div>
+      <div class="note"><strong>Deleting —</strong> if an item is still referenced elsewhere (for example, on a draft or open order), deleting it shows a warning first and requires a second "Delete Anyway" confirmation rather than removing it outright.</div>
+      <div class="note"><strong>Bulk export —</strong> the catalog supports CSV/Excel export. A separate export includes unit cost figures and is limited to roles with financial access.</div>
+    </section>
+
+    <section class="module" id="used-inventory">
+      <p class="eyebrow"><span class="num">09</span> · Inventory &amp; Stock</p>
+      <h2>Used Inventory &amp; Returns</h2>
+      <p class="intro">What happens to items that come back.</p>
+      <div class="tabs"><span class="tab">Pending Returns</span><span class="tab">Used Pool</span></div>
+
+      <h3><span class="tag">Pending Returns</span>The Disposition Workflow</h3>
+      <p>When a returnable or used-pool item comes back from a property, it lands here as a pending return, tied to the request it came from. The list can be narrowed by a property dropdown, and exported to CSV.</p>
+      <ol>
+        <li><strong>Received</strong> — Warehouse stamps it once it's physically back on-site.</li>
+        <li><strong>Split (optional)</strong> — a multi-quantity return can be split into two records with different quantities, so part of a batch can take one outcome and the rest another (e.g. half restocked, half discarded).</li>
+        <li><strong>Suggest Disposition</strong> — Warehouse or Admin proposes what should happen, with condition, notes, and an optional photo: <strong>Restock, Discard at Property, Discard at Warehouse, Give to Staff, Send for Repair, Keep for Parts, Lost/Stolen,</strong> or <strong>Different Item (Logged via Intake)</strong> — used when what physically came back isn't a match for what was dispensed, and has already been logged separately through Item Intake instead.</li>
+        <li><strong>Approve</strong> — Admin approves, rejects, or overrides the suggestion; Office can view but not act on it here.</li>
+        <li><strong>Execute</strong> — Warehouse or Admin carries it out. A <strong>Restock</strong> outcome requires confirming a condition and shelf location, and creates or updates the matching Used Pool record.</li>
+      </ol>
+      <p>Anything sitting in the queue too long is flagged with an aging badge so it doesn't get forgotten.</p>
+      <div class="note warn"><strong>A faster path also exists —</strong> Warehouse or Admin can skip the queue above entirely and hit <strong>Resolve</strong>, closing a return out in one step with any final outcome — Restock, Discard, Give to Staff, Send for Repair, Keep for Parts, or even Lost/Stolen — without a separate Admin approval, and even before the item has been marked Received. It runs in parallel to the Suggest → Approve → Execute flow, for when someone just needs to close something out on the spot. Items sent for repair come back through this same Resolve action once the repair's done — restocked (with condition/shelf) or any other final outcome.</div>
+
+      <div class="pipeline">
+        <span class="step">Returned</span><span class="arrow">→</span>
+        <span class="step">Received</span><span class="arrow">→</span>
+        <span class="step wait">Disposition Suggested</span><span class="arrow">→</span>
+        <span class="step">Approved</span><span class="arrow">→</span>
+        <span class="step go">Executed</span>
+        <div class="branch-row">
+          <span class="branch-tag">Disposition options</span>
+          <span class="step">Restock</span><span class="arrow">·</span>
+          <span class="step">Discard</span><span class="arrow">·</span>
+          <span class="step">Give to Staff</span><span class="arrow">·</span>
+          <span class="step">Send for Repair</span><span class="arrow">·</span>
+          <span class="step">Keep for Parts</span><span class="arrow">·</span>
+          <span class="step stop">Lost / Stolen</span><span class="arrow">·</span>
+          <span class="step">Different Item</span>
+        </div>
+      </div>
+      <div class="who">
+        <span class="label">Suggest / execute</span><span class="role-chip role-warehouse">Warehouse</span><span class="role-chip role-admin">Admin</span>
+        <span class="label" style="margin-left:14px">Approve</span><span class="role-chip role-admin">Admin</span>
+      </div>
+
+      <h3><span class="tag">Used Pool</span>The Used Catalog</h3>
+      <p>A sellable/available catalog of used items, laid out just like regular Inventory — its own add/edit modal, variant support, bulk import, history, and CSV export. It's fed by restocked returns and by Item Intake, and can also be stocked directly. A used-pool item dispositioned directly here (not through a return) has a slightly narrower set of outcomes than a Pending Return does — Lost/Stolen is only reachable via the Pending Returns flow.</p>
+      <div class="who"><span class="label">View &amp; disburse</span><span class="role-chip role-warehouse">Warehouse</span><span class="label" style="margin-left:14px">Edit / delete outright</span><span class="role-chip role-admin">Admin</span><span class="label" style="margin-left:14px">View only</span><span class="role-chip role-office">Office</span></div>
+    </section>
+
+    <section class="module" id="manual-entry">
+      <p class="eyebrow"><span class="num">10</span> · Inventory &amp; Stock</p>
+      <h2>Manual Entry</h2>
+      <p class="intro">A quick way to adjust stock outside the normal request or order flow — logging items used off-book at a property, or correcting a count that's drifted from reality.</p>
+      <div class="tabs"><span class="tab">New Entry</span><span class="tab">Entries</span></div>
+      <p>On <strong>New Entry</strong>, choose <strong>Use Inventory</strong> (deduct stock) or <strong>Add Inventory</strong> (add stock that was found or counted) — an entry can list several items at once via "Add Row," each independently picked from the new or used pool, alongside the property/unit it's for and who collected it. An optional <strong>Custom Date &amp; Time</strong> field lets you backdate the entry to when it actually happened, rather than when you're submitting it. Submit, and it lands in the <strong>Entries</strong> queue as Pending. That queue has its own status tabs (Pending / Approved / Rejected), free-text search, and a date range filter, and Admin/Office can export the current view to CSV.</p>
+      <div class="who">
+        <span class="label">Submit</span><span class="role-chip role-admin">Admin</span><span class="role-chip role-warehouse">Warehouse</span>
+        <span class="label" style="margin-left:14px">Approve or reject</span><span class="role-chip role-admin">Admin</span>
+      </div>
+      <p>Stock only actually moves once Admin approves the entry (with a check that a "use" entry can't exceed what's on hand). Rejecting can include a reason, though the system doesn't require one — inventory is left untouched either way. Office can view the queue but can't create or approve entries; a separate hard delete (Admin-only) removes a record entirely regardless of status.</p>
+    </section>
+
+    <section class="module" id="orders">
+      <p class="eyebrow"><span class="num">11</span> · Inventory &amp; Stock</p>
+      <h2>Orders</h2>
+      <p class="intro">Purchasing from suppliers.</p>
+      <div class="tabs"><span class="tab">All</span><span class="tab">Pending</span><span class="tab">Ordered</span></div>
+      <p><strong>All</strong> shows every order as a card. <strong>Pending</strong> narrows to drafts not yet sent. <strong>Ordered</strong> is a flat, searchable list of every still-outstanding <em>line</em> across every placed order — useful because a shipment arrives mixed and doesn't respect purchase-order boundaries. It has its own sub-filters, each with a live count: <strong>All, Outstanding, Nothing yet, Partly in, Received,</strong> and <strong>Closed.</strong></p>
+
+      <h3><span class="tag">Step 1</span>Draft &amp; Place</h3>
+      <div class="who-row"><span class="role-chip role-admin">Admin</span><span class="role-chip role-warehouse">Warehouse</span><span class="label">draft</span></div>
+      <p>Pick a supplier and add line items to a draft. The <strong>Review &amp; Order</strong> step (Admin) locks in the actual quantity and unit cost per line, with optional notes per line, then submits it to the vendor.</p>
+      <div class="note">The moment an order is submitted to the vendor, the catalog's listed unit cost for each ordered item updates to match — before anything has actually arrived. This is separate from the FIFO cost layers used to price a dispense, which only get created once a line is actually received; it just means the price shown on the Inventory page can shift as soon as an order goes out, not only once it's in.</div>
+
+      <h3><span class="tag">Step 2</span>Receive</h3>
+      <div class="who-row"><span class="role-chip role-warehouse">Warehouse</span><span class="role-chip role-admin">Admin</span></div>
+      <ul class="tight">
+        <li><strong>Receive All</strong> — a one-click close for a fully-arrived order.</li>
+        <li><strong>Partial</strong> — a shipment modal with a per-line quantity-received stepper and progress bars, distinguishing what's "arriving now" from the running "total received."</li>
+        <li><strong>Per-line controls</strong> — Receive, Correct, Mark Not Received, or Reopen a single line from the flat Ordered list, without touching the rest of that order. Two people can receive different lines of the same order at the same time without conflicting.</li>
+      </ul>
+      <p>Receiving more than was ordered, walking back a quantity already marked received, and marking a line <strong>Not Received</strong> are all Admin-only — Warehouse's per-line controls are otherwise Receive, Correct, and Reopen.</p>
+
+      <div class="pipeline">
+        <span class="step">Draft</span><span class="arrow">→</span>
+        <span class="step">Ordered</span><span class="arrow">→</span>
+        <span class="step go">Received</span>
+        <div class="branch-row">
+          <span class="branch-tag">Tracked per line</span>
+          <span class="step">Partly in</span><span class="arrow">·</span>
+          <span class="step stop">Closed <span style="font-weight:400">(not received)</span></span>
+        </div>
+      </div>
+      <div class="note"><strong>Good to know —</strong> every receipt is recorded at its actual cost, and when items are later dispensed from Item Requests, the oldest-purchased batch is used first — so reported costs stay accurate even as supplier prices change over time. Order and per-line history is viewable by Admin/Warehouse — opening history on a single line shows both that line's own events (received, corrected, closed, reopened) and a second section for how that item has moved warehouse-wide, not just on this order.</div>
+      <div class="note"><strong>Exporting —</strong> PDF export comes in a financial version (with prices, Admin/Office) and a warehouse-safe version (no prices, also open to Warehouse) — a single order's PDF shows each line's real catalog photo, while a filtered-list PDF uses smaller cached thumbnails to keep it manageable. CSV export, by contrast, is Admin/Office only — there's no Warehouse-accessible CSV at all.</div>
+      <div class="note">Admin/Office can also pull a lot-level FIFO report — remaining quantity, unit cost, received date, and source order for each item's individual purchase batches — a fully itemized look behind the "oldest first" costing above.</div>
+    </section>
+
+    <section class="module" id="shelves">
+      <p class="eyebrow"><span class="num">12</span> · Warehouse Setup</p>
+      <h2>Shelf Locations</h2>
+      <p class="intro">The warehouse's own shelf and bin labels — the dropdown you'll see throughout Inventory, Orders, and Used Inventory wherever an item needs a "where is it" answer.</p>
+      <p>A simple named list: search, add, edit, delete, or upload a CSV of labels in bulk.</p>
+      <div class="who"><span class="label">View</span><span class="role-chip role-office">Office</span><span class="label" style="margin-left:14px">Manage the list</span><span class="role-chip role-admin">Admin</span><span class="label" style="margin-left:14px">Assign a shelf to an item</span><span class="role-chip role-warehouse">Warehouse</span></div>
+      <div class="note warn"><strong>Renaming isn't just a label edit —</strong> changing a shelf's name immediately rewrites the shelf location on every inventory item, variant, used-inventory item, and used-inventory variant that pointed at the old name. It's a catalog-wide update, not a local one, so double-check before renaming a shelf that's already in heavy use.</div>
+    </section>
+
+    <section class="module" id="locations">
+      <p class="eyebrow"><span class="num">13</span> · Warehouse Setup</p>
+      <h2>Locations</h2>
+      <p class="intro">The property list — every building Tropilux furnishes and maintains.</p>
+      <p>Add a property (name and address), then add its units three ways:</p>
+      <ul class="tight">
+        <li><strong>Single Unit</strong> — unit number, type (Standard or Studio), bed/bath count, and square footage.</li>
+        <li><strong>Bulk Add</strong> — a sequential range of unit numbers (e.g. 101–120) sharing the same specs.</li>
+        <li><strong>Upload CSV/XLSX</strong> — import a whole property's unit list at once.</li>
+      </ul>
+      <div class="who"><span class="label">View</span><span class="role-chip role-office">Office</span><span class="label" style="margin-left:14px">Add / edit / delete</span><span class="role-chip role-admin">Admin</span></div>
+      <div class="note">A duplicate unit number is handled differently depending on how you add it: typing one in by hand is rejected outright, while a Bulk Add range or CSV upload silently skips any units that already exist and just tells you how many were added versus skipped.</div>
+    </section>
+
+    <section class="module" id="users">
+      <p class="eyebrow"><span class="num">14</span> · Administration</p>
+      <h2>Users</h2>
+      <p class="intro">The staff directory — stat cards up top, a role-filter chip row (All / Admin / Office / Warehouse / Staff / Employee), then a searchable card grid: name, email, phone, a color-coded role badge, and Active/Inactive status.</p>
+      <div class="who"><span class="label">View directory</span><span class="role-chip role-admin">Admin</span><span class="role-chip role-office">Office</span></div>
+      <p>Admin adds people, sets their role, and toggles them active or inactive — or removes an account entirely with a separate, permanent <strong>Delete User</strong> action, distinct from deactivating it. The important part beyond the basics: Admin can restrict a non-admin user to specific <strong>properties</strong> (<span class="mono">assigned_locations</span>) and <strong>inventory categories</strong> (<span class="mono">assigned_categories</span>) — this is what quietly narrows what that person sees everywhere else in the app.</p>
+      <div class="note">A user is force-logged-out immediately, wherever they're currently signed in, whenever their account is deactivated, or when their password or email is changed.</div>
+    </section>
+
+    <section class="module" id="reports">
+      <p class="eyebrow"><span class="num">15</span> · Administration</p>
+      <h2>Reports &amp; Notifications</h2>
+      <p class="intro">Admin-only.</p>
+      <div class="tabs"><span class="tab">Daily Usage Reports</span><span class="tab">Email Notifications</span></div>
+      <p><strong>Daily Usage Reports</strong> rolls up item-request activity over a window you choose — 7 days by default, up to 31 — with per-day CSV export, plus a full inventory-snapshot export you can pull any time.</p>
+      <p><strong>Email Notifications</strong> is a grid: every <strong>Admin or Office</strong> account down the side, every event type across the top — new item request, misc request, maintenance, move-in/out, transfer, billing, admin tasks, and a "staff marked done" row that exists only for Move In and Move Out (the other task types don't have a completion email at all). Flip a switch to decide who gets emailed for what, with a live preview of the exact subject and body of each notification.</p>
+      <div class="note warn">This grid doesn't control every notification email, though — <strong>Warehouse</strong> is automatically emailed on every new Item Request and on any Misc Request addressed to Warehouse, regardless of these toggles, since Warehouse has no row in the grid to opt out from.</div>
+      <div class="who"><span class="role-chip role-admin">Admin only</span></div>
+    </section>
+
+    <section class="module" id="backups">
+      <p class="eyebrow"><span class="num">16</span> · Administration</p>
+      <h2>Backups</h2>
+      <p class="intro">Admin-only. A defined set of core collections — users, properties, shelf locations, inventory (new and used), stock lots, pending returns, orders, item requests, misc requests, manual entries, item intakes, tasks, and timesheets — is backed up automatically once a day, written to two independent places (Google Drive and cloud storage), so a failure in one doesn't take out both copies.</p>
+      <div class="note warn"><strong>What's not included —</strong> the backup does not capture audit/history logs — the records behind the "History" views you'll see on Inventory, Orders, Used Inventory, and Pending Returns — or archived item photos. Day-to-day stock, requests, and orders are fully protected; the detailed "who changed what and when" trail is not. Keep that in mind before relying on a restore to reconstruct exactly what happened, not just where things ended up.</div>
+      <p>The main screen is a grid of daily runs: status (Completed / In Progress / Failed), size, and what triggered it. A <strong>Run backup now</strong> button starts one on demand — though the daily backup itself is actually triggered from outside the app, by a scheduled job that runs overnight (roughly 2–3am); a failed run is logged as Failed and doesn't hold up the next day's backup. Pre-restore safety snapshots are hidden from this grid by default — a "Show pre-restore snapshots" checkbox reveals them, and unlike a regular backup, a snapshot can only be restored as the whole database, not one collection at a time. Opening a backup shows a per-collection breakdown with links to the stored files.</p>
+      <div class="note"><strong>Restoring is deliberate —</strong> whether you restore the whole database or a single collection, the system automatically takes a safety snapshot first, and requires typing <span class="mono">RESTORE</span> to confirm. It can't be undone lightly, on purpose.</div>
+      <div class="note">A backup run can also be permanently deleted — except a pre-restore safety snapshot, which is protected from deletion for 7 days after it's taken.</div>
+      <div class="who"><span class="role-chip role-admin">Admin only</span></div>
+    </section>
+
+    <section class="module" id="roles-ref">
+      <p class="eyebrow"><span class="num">17</span> · Reference</p>
+      <h2>Roles at a Glance</h2>
+      <p class="intro">One shared rulebook governs every screen in the app — roughly 140 individual permission switches, but they break down into a consistent shape per role:</p>
+      <div class="table-wrap">
+        <table class="role-table">
+          <thead>
+            <tr><th>Role</th><th>What they're for</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="role-chip role-admin">Admin</span></td><td>Full control of everything — financials, final approvals, edits and deletes, user management, permissions, backups and restore. The only role that can override a receiving quantity, edit a placed order, or force-close a task outright.</td></tr>
+            <tr><td><span class="role-chip role-office">Office</span></td><td>Approvals, reporting, and financial visibility from a desk — reviews and signs off on requests, sees cost figures, exports reports. Cannot dispense stock, receive shipments, or execute dispositions, and cannot mark a Billing task complete.</td></tr>
+            <tr><td><span class="role-chip role-warehouse">Warehouse</span></td><td>The physical operator — receives shipments, dispenses items and accepts returns, executes used-item dispositions, keeps shelves and photos current. Final approval sign-off still routes to Admin/Office.</td></tr>
+            <tr><td><span class="role-chip role-staff">Staff / Employee</span></td><td>Front-line property staff — submit item and misc requests, work their assigned Task Manager checklists, log their own timesheets. Generally see only their own requests, tasks, and entries.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">A handful of actions are more open than their module's overall theme suggests — for instance, creating and reassigning a Task Manager task is available to every role, not just Admin/Office. Where that's the case, it's called out in that module's own section above rather than in this summary table.</div>
+      <div class="note">Within a role, an account can also be scoped to specific properties and inventory categories — so two people with the same role badge may not see exactly the same data.</div>
+    </section>
+
+    <section class="module" id="glossary">
+      <p class="eyebrow"><span class="num">18</span> · Reference</p>
+      <h2>Status Glossary</h2>
+      <p class="intro">The same handful of status words recur across modules. Here's what each one means when you see it.</p>
+      <div class="table-wrap">
+        <table class="glossary">
+          <tbody>
+            <tr><td>Pending</td><td>Submitted and waiting on someone's review — the default starting state almost everywhere.</td></tr>
+            <tr><td>Pending Admin Approval</td><td>A first approval happened, but at least one line needs Admin/Office sign-off before it can move further (Item Requests).</td></tr>
+            <tr><td>Approved / Partial Approved</td><td>Cleared to fulfill — in full, or for only some of the requested lines.</td></tr>
+            <tr><td>Rejected / Denied</td><td>Declined. Stops here; nothing is deducted from or added to stock.</td></tr>
+            <tr><td>Dispensed / Partial Dispensed</td><td>Stock has physically left the warehouse for this request, in full or in part. A Partial Dispensed request can still be topped up via "Disburse More Items."</td></tr>
+            <tr><td>Returned / Pending Returned</td><td>The requester says an item is coming back — it isn't credited to stock until Warehouse also marks it Received.</td></tr>
+            <tr><td>Draft</td><td>A purchase order being put together — not yet sent to the supplier.</td></tr>
+            <tr><td>Ordered</td><td>Sent to the supplier and awaiting delivery. The catalog's listed cost updates at this point too, ahead of anything arriving.</td></tr>
+            <tr><td>Received / Partly In / Closed</td><td>How much of an order's line items have actually arrived; "Closed" is the current label for a line marked not received.</td></tr>
+            <tr><td>Assigned</td><td>A task has been created and handed to one or more staff.</td></tr>
+            <tr><td>Awaiting Admin</td><td>A Task Manager status filter for tasks where every assignee has confirmed but final sign-off is still outstanding.</td></tr>
+            <tr><td>Completed</td><td>Every assignee has confirmed, and (where required) Admin/Office has given final sign-off.</td></tr>
+            <tr><td>Needs Info</td><td>Sent back to the submitter for more detail before review can continue (Item Intake).</td></tr>
+            <tr><td>Disposition Suggested</td><td>Warehouse or Admin has proposed what should happen to a returned item — restock, discard, repair, etc.</td></tr>
+            <tr><td>Executed</td><td>An approved disposition has actually been carried out — e.g. the item is now back on the shelf in the Used Pool.</td></tr>
+            <tr><td>Different Item (Logged via Intake)</td><td>A Pending Return disposition meaning what physically came back wasn't a match for what was dispensed — it's handled separately as its own Item Intake instead of being restocked here.</td></tr>
+            <tr><td>Unresolved</td><td>Neither confirmed nor denied — left open for follow-up (Item Intake, Pending Returns).</td></tr>
+            <tr><td>Aging</td><td>A visual flag on anything that's sat in a queue — usually Pending Returns — longer than expected.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="colophon">Tropilux Supply — internal field reference · generated from, and cross-checked against, the current application codebase</footer>
+
+<script>
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+    var sections = links
+      .map(function (a) { return { link: a, el: document.getElementById(a.getAttribute('href').slice(1)) }; })
+      .filter(function (s) { return s.el; });
+    if (!sections.length) return;
+
+    function setActive(link) {
+      links.forEach(function (l) { l.classList.remove('active'); });
+      if (link) link.classList.add('active');
+    }
+
+    // Whichever section's top has most recently scrolled past the reading line
+    // is "current" — robust regardless of a section's height, unlike a fixed
+    // intersection band which can skip short sections entirely.
+    function updateActive() {
+      var line = window.innerWidth <= 860 ? 90 : 140;
+      var current = sections[0];
+      for (var i = 0; i < sections.length; i++) {
+        if (sections[i].el.getBoundingClientRect().top - line <= 0) {
+          current = sections[i];
+        } else {
+          break;
+        }
+      }
+      setActive(current.link);
+    }
+
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () { updateActive(); ticking = false; });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    // Give instant feedback on click instead of waiting for scroll/observer
+    // physics to settle — this is what was reading as "glitchy."
+    links.forEach(function (a) {
+      a.addEventListener('click', function () { setActive(a); });
+    });
+
+    updateActive();
+  })();
+</script>
+</body>
+</html>
